@@ -1,5 +1,9 @@
 import React from 'react';
 
+import List from './list';
+import AddForm from './add-form';
+
+import './board.css';
 
 export default class Board extends React.Component{
   constructor(props){
@@ -7,7 +11,7 @@ export default class Board extends React.Component{
     this.state = {
         lists: []
     }
-    this.add.List = this.addList.bind(this);
+    this.addList = this.addList.bind(this);
   }
 
 addList(title){
@@ -24,19 +28,19 @@ render(){
   </li>
 ));
   return(
-    <div>
+    <div className="board">
       <h3>Trello app</h3>
-      <ul classNmae="full-list">
+      <h2>{this.props.title}</h2>
+      <ul className="full-list">
         {list}
         <li className= "namespot">
-          <Addform onAdding={text => this.addList(text)} />
+          <AddForm onAdding={text => this.addList(text)} />
         </li>
       </ul>
     </div>
   )
 }
-
-
-
-
 }
+Board.defaultProps = {
+    title: 'Board'
+};

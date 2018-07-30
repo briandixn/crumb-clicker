@@ -1,32 +1,38 @@
-import React from './react';
+import React from 'react';
+import Card from './card';
+import AddForm from './add-form';
+
+import './list.css';
+
 
 export default class List extends React.Component {
-  constructor(props){
-    super(props)
-    this.state = {
-      cards = []
+    constructor(props) {
+        super(props);
+        this.state = {
+            cards: []
+        }
+
+        this.addCard = this.addCard.bind(this);
     }
-    this.addCard = this.addCard.bind(this);
-  }
-/////we have to bind this in order to use it outside the object
-addCard(text) {
-  this.setState ({
-    cards: {text}
-  })
-}
-render(){
 
-const cards = this.state.cards.map((card, index) =>
-  <li key ={index}>
-    <Card {...card}/>
-  </li>
+    addCard(text) {
+        this.setState({
+            cards: [...this.state.cards, {
+                text
+            }]
+        });
+    }
 
-);
-
-  return(
-        <div>
-          <h2> {this.props.title}</h2>
-          <ul className="list">
+    render() {
+        const cards = this.state.cards.map((card, index) =>
+            <li key={index}>
+                <Card {...card} />
+            </li>
+        );
+        return (
+            <div>
+                <h3>{this.props.title}</h3>
+                <ul className="list">
                     {cards}
                     <li>
                         <AddForm
@@ -35,8 +41,11 @@ const cards = this.state.cards.map((card, index) =>
                         />
                     </li>
                 </ul>
-        </div>
-  )
+            </div>
+        );
+    }
 }
 
-}
+List.defaultProps = {
+    title: ''
+};
